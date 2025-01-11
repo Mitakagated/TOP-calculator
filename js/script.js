@@ -14,14 +14,22 @@ function divide(a, b) {
     return a / b;
 };
 
-function operate(operator, a, b) {
+function operate(a, b, operator) {
     return operator(a, b);
 };
 
 const display = document.querySelector('.display');
 const buttons = document.querySelectorAll('button');
+const operator = document.querySelectorAll('.operator');
+const numbers = document.querySelectorAll('.number');
 
-buttons.forEach(button => {
+numbers.forEach(button => {
+    button.addEventListener('click', () => {
+        display.textContent += button.textContent;
+    });
+});
+
+operator.forEach(button => {
     button.addEventListener('click', () => {
         display.textContent = display.textContent + ' ' + button.textContent + ' ';
     });
@@ -36,10 +44,12 @@ const operators = {
 
 const equals = document.querySelector('.equals');
 equals.addEventListener('click', () => {
+    display.textContent = display.textContent.trimStart();
+    display.textContent = display.textContent.trimEnd();
     display.textContent = operate(
-        operators[display.textContent.split(' ')[1]],
         Number(display.textContent.split(' ')[0]),
-        Number(display.textContent.split(' ')[2])
+        Number(display.textContent.split(' ')[2]),
+        operators[display.textContent.split(' ')[1]]
     )
 })
 
@@ -50,13 +60,8 @@ clear.addEventListener('click', () => {
 
 const decimal = document.querySelector('.decimal')
 decimal.addEventListener('click', () => {
-    if (display.textContent.includes('.')) return
-    display.textContent += '.'
-})
-
-const negative = document.querySelector('.negative')
-negative.addEventListener('click', () => {
-    if (display.textContent === '') return;
-    if (display.textContent[0] === '-') return display.textContent = display.textContent.slice(1);
-    display.textContent = '-' + display.textContent;
+    if (display.textContent.indexOf('.') !== -1) {
+        return;
+    }
+    display.textContent += '.';
 })
