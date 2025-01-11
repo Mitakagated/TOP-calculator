@@ -31,6 +31,12 @@ numbers.forEach(button => {
 
 operator.forEach(button => {
     button.addEventListener('click', () => {
+        if (display.textContent === '') {
+            return
+        }
+        if (display.textContent.indexOf(' ') !== -1) {
+            return
+        }
         display.textContent = display.textContent + ' ' + button.textContent + ' ';
     });
 });
@@ -46,6 +52,10 @@ const equals = document.querySelector('.equals');
 equals.addEventListener('click', () => {
     display.textContent = display.textContent.trimStart();
     display.textContent = display.textContent.trimEnd();
+    if (display.textContent.split(' ')[1] == '/' && display.textContent.split(' ')[2] == '0') {
+        display.textContent = 'XDXD nice try';
+        return;
+    }
     display.textContent = operate(
         Number(display.textContent.split(' ')[0]),
         Number(display.textContent.split(' ')[2]),
@@ -60,7 +70,7 @@ clear.addEventListener('click', () => {
 
 const decimal = document.querySelector('.decimal')
 decimal.addEventListener('click', () => {
-    if (display.textContent.indexOf('.') !== -1) {
+    if (display.textContent.includes('.')) {
         return;
     }
     display.textContent += '.';

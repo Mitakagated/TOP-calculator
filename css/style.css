@@ -29,7 +29,7 @@ button {
     color: #fff;
 }
 
-.number {
+.number, .decimal {
     background-color: #4CAF50;
     color: #fff;
 }
